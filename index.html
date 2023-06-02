@@ -115,6 +115,7 @@
         const onSelcet = (event) => {
             setIndex(event.target.value);
         };
+        let funcList = [<MinutesToHours/>, <KmToMiles/>];
 
         return (
             <div>
@@ -126,8 +127,7 @@
                 </select>
                 <hr />
                 {index === "-1" ? "Please select your units" : null}
-                {index === "0" ? <MinutesToHours /> : null}
-                {index === "1" ? <KmToMiles /> : null}
+                {funcList[index]}
             </div>
         );        
     };    
