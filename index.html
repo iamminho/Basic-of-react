@@ -13,7 +13,7 @@
 <script type = "text/babel">    
     const root = document.getElementById("root");   
 
-    const App = () => {            
+    const MinutesToHours = () => {            
         const [amount, setAmount] = React.useState(0);                
         const [flipped, setFlipped] = React.useState(false);        
         const onChange = (event) => {            
@@ -29,13 +29,13 @@
 
         return (
             <div>
-                <div>
-                    <h1>Super Converter</h1>
-                    <label htmlFor="amount">minutes</label>
+                <h3>Minutes to Hours</h3>
+                <div>                    
+                    <label htmlFor="minutes">minutes</label>
                     <input 
                         value={flipped ? amount * 60 : amount}
-                        id = "amount" 
-                        placeholder = "amount" 
+                        id = "minutes" 
+                        placeholder = "minutes" 
                         type="number" 
                         onChange={onChange}
                         disabled = {flipped} 
@@ -63,12 +63,66 @@
                 </div>                
             </div>
         )        
+    };        
+    function KmToMiles() {
+        const [amount, setAmount] = React.useState(0);
+        const [flipped, setFlipped] = React.useState(false);    
+        const onChange = (event) => {
+            setAmount(event.target.value);
+        }
+        const reset = () => {
+            setAmount(0);
+        }
+        const onFlip = () => {
+            reset();
+            setFlipped((current) => !current);
+        }
+
+        return (            
+            <div>
+                <h3>KM 2 M</h3>    
+                <div>
+                    <label htmlFor="kilometer">kilometer</label>
+                    <input     
+                        value = {flipped ? (amount / 0.62137).toFixed(4) : amount}               
+                        id = "kilometer"
+                        placeholder = "kilometer"
+                        type = "number"    
+                        onChange = {onChange}    
+                        disabled = {flipped}                
+                    />
+                </div>
+
+                <div>
+                    <label htmlFor="miles">miles</label>
+                    <input
+                        value = {flipped ? amount : (amount * 0.62137).toFixed(4)}  
+                        id = "miles"
+                        placeholder = "miles"
+                        type = "number"     
+                        onChange = {onChange}    
+                        disabled = {!flipped}        
+                    />
+                </div>
+
+                <button onClick = {reset}>Reset</button>
+                <button onClick = {onFlip}>Flip</button>
+            </div>
+        )
+    }
+    const App = () => {                            
+        return (
+            <div>
+                <h1>Super Converter</h1>    
+                <MinutesToHours />     
+                <KmToMiles />    
+            </div>
+        )        
     };    
 
     const render = () => {
         ReactDOM.render(<App />, root);
-    }       
-    
+    }           
     render();
 </script>
 </html>    
