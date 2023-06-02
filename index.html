@@ -1,53 +1,56 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-</head>
-<body>
-    <div id = "root"></div>
-</body>
-<script src = "https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
-<script src = "https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
-<script src = "https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<script type = "text/babel">    
-    const root = document.getElementById("root");   
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    const root = document.getElementById("root");
 
-    const Btn = ({ text, padding }) => {        
-        return <button 
-            style = {{
-                backgroundColor: "tomato",
-                color: "white",
-                padding: padding,
-                border: 0,
-                borderRadius: 10,            
-            }}
+    const Btn = ({ text, changeValue }) => {
+      console.log(text, "was rendered");
+      return (
+        <button
+          onClick={changeValue}
+          style={{
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+          }}
         >
-        {text}
+          {text}
         </button>
-    }    
+      );
+    };
+
+    const MenorizedBtn = React.memo(Btn);
 
     const ConfrimBtn = () => {
-        return <button>Confirm</button>
-    } 
-        
-    const App = () => {                   
-        return (
-            <div>
-                <div>
-                    <Btn text = "save change" padding = "10px 20px" />
-                </div>
-                <div>
-                    <Btn text = "continue" padding = "15px 30px"/>
-                </div>
-                
-            </div>                            
-        )
-    };    
+      return <button>Confirm</button>;
+    };
+
+    const App = () => {
+      const [value, setValue] = React.useState("Save Changes");
+      const changeValue = () => setValue("Revert Changes");
+      return (
+        <div>
+          <MenorizedBtn text={value} changeValue={changeValue} />
+          <MenorizedBtn text="continue" />
+        </div>
+      );
+    };
 
     const render = () => {
-        ReactDOM.render(<App />, root);
-    }           
+      ReactDOM.render(<App />, root);
+    };
     render();
-</script>
-</html>     
+  </script>
+</html>
