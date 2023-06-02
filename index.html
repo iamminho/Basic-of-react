@@ -7,23 +7,24 @@
   <body>
     <div id="root"></div>
   </body>
-  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
   <script type="text/babel">
     const root = document.getElementById("root");
 
-    const Btn = ({ text, changeValue }) => {
+    const Btn = ({ text, fontsize }) => {
       console.log(text, "was rendered");
       return (
         <button
-          onClick={changeValue}
           style={{
             backgroundColor: "tomato",
             color: "white",
             padding: "10px 20px",
             border: 0,
             borderRadius: 10,
+            fontsize: fontsize,
           }}
         >
           {text}
@@ -32,6 +33,11 @@
     };
 
     const MenorizedBtn = React.memo(Btn);
+
+    MenorizedBtn.propTypes = {
+      text: PropTypes.string.isRequired,
+      fontsize: PropTypes.number,
+    };
 
     const ConfrimBtn = () => {
       return <button>Confirm</button>;
@@ -42,8 +48,8 @@
       const changeValue = () => setValue("Revert Changes");
       return (
         <div>
-          <MenorizedBtn text={value} changeValue={changeValue} />
-          <MenorizedBtn text="continue" />
+          <MenorizedBtn text={"Stop"} fontsize={17} />
+          <MenorizedBtn text={"continue"} />
         </div>
       );
     };
